@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -38,10 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.discord',
+    'django.forms',
+    
+    'ratelimit',
+    'captcha',
+    
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = 'infinity.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -110,37 +112,20 @@ SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-#  AllAuth
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
-SOCIALACCOUNT_PROVIDERS = {
-    'discord': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '767959603849723924',
-            'secret': '0NRHI9EZm8Ff7bGo_XzJDMNn94RTUkuM',
-            'key': '5eea4395cba95228629f591ce86dc0a4ec152f9039294e862ad89461ce1872d3'
-        }
-    }
-}
+# https://docs.djangoproject.com/en/2.2/ref/settings/#email-timeout
 
 
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =2
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
-ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -154,3 +139,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/css'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+SECURE_BROWSER_XSS_FILTER = True
+
+X_FRAME_OPTIONS = "DENY"
+
+
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_IMAGE_SIZE = (350, 50)
+CAPTCHA_FONT_SIZE = 40
+CAPTCHA_LETTER_ROTATION = (0, 35)
+CAPTCHA_FOREGROUND_COLOR = '#F52E2E'
+# CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null',)

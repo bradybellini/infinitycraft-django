@@ -1,6 +1,8 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+ {% block content %}
 
-<main class="container ">
+<main class="container mx-auto">
   <div class="grid grid-cols-4 gap-4 mx-6 my-6">
     <a
       href="#"
@@ -138,7 +140,7 @@
 </main>
 {% endblock content %} 
 
-?{{ page_request_var }}={{ paginated_queryset.previous_page_number }}
+{% comment %} ?{{ page_request_var }}={{ paginated_queryset.previous_page_number }} {% endcomment %}
 
 {% comment %} {% for obj in object_list %} {{obj.title}} {{obj.author}}
 {{obj.timestamp|timesince}} {{obj.overview}} {% endfor %} {% endcomment %}
