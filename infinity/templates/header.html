@@ -1,3 +1,7 @@
+  {% url 'home' as home %}
+  {% url 'login' as login %}
+  {% url 'logout' as logout %}
+  
   <header class="w-full text-gray-400 bg-dark-4 sticky">
       <div x-data="{ open: false }"
         class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
@@ -37,18 +41,32 @@
         <nav :class="{'flex': open, 'hidden': !open}"
 
           class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row transition-transform">
-          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 border-b-2 border-logo-red focus:outline-none focus:shadow-outline"
-            href="/">Home</a>
+          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 border-b-2 border-dark-4 hover:border-logo-red focus:outline-none focus:shadow-outline {% if request.path == home %}border-logo-red {% endif %}"
+            href="{% url 'home' %}">Home</a>
           <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline"
             href="#">Wiki</a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4"
+          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline"
             href="#">Discord</a>
           <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline"
             href="#">Store</a>
           <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline"
             href="#">Help</a>
-          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline"
-            href="{% url 'login'  %}">Log In</a>
+          {% if user.is_authenticated %}
+           <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline {% if request.path == login %}border-logo-red {% endif %}"
+            href="#">{{user.username}}</a>
+          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline {% if request.path == login %}border-logo-red {% endif %}"
+            href="{% url 'logout' %}">Log Out</a>
+          {% else %}
+          <a class="px-4 py-2 mt-2 text-sm font-semibold md:mt-0 md:ml-4 border-b-2 hover:border-logo-red border-dark-4 focus:outline-none focus:shadow-outline {% if request.path == login %}border-logo-red {% endif %}"
+            href="{% url 'login' %}">Log In</a>
+          {% endif %}           
         </nav>
       </div>
   </header>
+  
+      {% comment %} {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %} {% endcomment %}

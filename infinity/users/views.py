@@ -62,3 +62,8 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/')
+    
+    
+@login_required(login_url='/login/')
+def profile_view(request):
+    pass
