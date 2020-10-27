@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'captcha',
     
     'users',
+    'aeon',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -83,7 +85,7 @@ WSGI_APPLICATION = 'infinity.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3")),
     }
 }
 
@@ -153,7 +155,3 @@ CAPTCHA_FONT_SIZE = 40
 CAPTCHA_LETTER_ROTATION = (0, 35)
 CAPTCHA_FOREGROUND_COLOR = '#F52E2E'
 # CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null',)
-
-
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
