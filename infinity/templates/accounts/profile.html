@@ -1,29 +1,60 @@
-{% extends 'base.html' %} {% block content %}
-<main class="container mx-auto flex justify-center my-20 ">
-    <form class="flex flex-col  bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl"
-      method="post">
-        {% csrf_token %}
-      <div class="text-3xl font-bold flex justify-center text-white">
-        Hi, {{user.usernname}}
-      </div>
+{% extends 'base.html' %}
+ {% block content %}
+    <main class="container flex mx-auto justify-center my-20">
+        <div class="flex flex-col bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl">
+            <div class="flex justify-center text-xl font-semibold">
+                Hi, {{user.username}}
+            </div>
+            <div class="p-6 ">
+                <ul class="flex">
+                    <li class="-mb-px mr-1">
+                        <a class="text-gray-400 hover:border-logo-red border-b-2 border-logo-red bg-dark-2 inline-block py-2 px-4 font-semibold" href="{% url 'profile' %}">
+                            Info
+                        </a>
+                    </li>
+                    <li class="mr-1">
+                        <a class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold" href="{% url 'edit_profile' %}">
+                            Edit Profile
+                        </a>
+                    </li>
+                   <li class="mr-1">
+                        <a class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold" href="{% url 'change_password' %}">
+                            Change Password
+                        </a>
+                    </li>
+                </ul>
+                <div class="w-full pt-4">
 
-      <div class="underline mb-2">
-      {{ form.non_field_errors }}
-      </div>
-      {% for field in form %}
-      <div class="flex flex-col mb-6">
-        {{ field.errors|striptags }}
-        <label class="text-gray-400 font-semibold">
-        {{ field.label }}
-        </label>
-        {{ field }}
-      </div>
-      {% endfor%}
-      <button
-        class="flex justify-center mt-4 bg-gray-600 rounded-md text-white p-2 hover:bg-gray-700 focus:outline-none focus:shadow-outline"
-        type="submit">
-        Continue
-      </button>
-    </form>
-  </main>
+                        <div class="flex flex-col">
+                            <div class="mt-2 text-lg">                            
+                                Username: {{user.username}}
+                            </div>                        
+                            <div class="mt-2  text-lg">                            
+                                Email: {{user.email}} 
+                            </div>
+                            <div class="mt-2  text-lg">                            
+                                Email Confirmed: No
+                            </div>
+                            <div class="mt-2  text-lg">                            
+                                Groups: {% for group in user.groups.all %} {{group}} {% endfor %}
+                            </div>
+                            <a href="#" class="mt-2 underline hover:text-gray-300">                            
+                                Resend confirmation email
+                            </a>
+                            <a href="{% url 'logout' %}" class="mt-2 underline hover:text-gray-300">
+                                Log out
+                            </a>
+                        </div>
+
+  
+                </div>
+            </div>
+            <div class="flex justify-center">
+                <a href="#" class="text-sm hover:text-gray-300">
+                    Need Help?
+                </a>
+            </div>
+        </div>
+    </main>
+
 {% endblock content %} 

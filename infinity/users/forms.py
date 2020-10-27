@@ -1,5 +1,7 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 from captcha.fields import CaptchaField, CaptchaTextInput
+
 from django.contrib.auth import (
     authenticate,
     get_user_model
@@ -25,9 +27,9 @@ class UserLogin(forms.Form):
         if username and password:
             user = authenticate(username=username, password=password)
             if not user:
-                raise forms.ValidationError('Incorrect Username and/or Password')
+                raise forms.ValidationError('Incorrect Username or Password')
             if not user.check_password(password):
-                raise forms.ValidationError('Incorrect Username and/or Password')
+                raise forms.ValidationError('Incorrect Username or Password')
             if not user.is_active:
                 raise forms.ValidationError('User not active')
             
@@ -66,3 +68,36 @@ class UserSignUp(forms.ModelForm):
                 "This Email has already been registered.")
     
         return super(UserSignUp, self).clean(*args, **kwargs)
+        
+class UserEmailChange(forms.ModelForm):
+    email = forms.EmailField(label='New Email', label_suffix='')
+    email2 = forms.EmailField(label='Confirm New Email', label_suffix='')
+    
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'email2',
+        ]
+    
+    def clean(self, *args, **kwargs):
+        email = self.cleaned_data.get('email')
+        email2 = self.cleaned_data.get('email2')
+        if email != email2:
+            raise forms.ValidationError('Emails must match.')
+        email_query = User.objects.filter(email=email)
+        if email_query.exists():
+            raise forms.ValidationError(
+                "This Email has already been registered.")
+                
+        return super(UserEmailChange, self).clean(*args, **kwargs)
+        
+class EditProfile(UserChangeForm):
+    password = None
+    class Meta:
+        model = User
+        fields = (
+            'email',
+            'first_name',
+            'last_name',
+        )
