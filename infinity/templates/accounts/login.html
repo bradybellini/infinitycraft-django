@@ -1,32 +1,35 @@
 {% extends 'base.html' %} {% block content %}
 <main class="container mx-auto flex justify-center my-20 ">
-    <form class="flex flex-col  bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl"
-      method="post">
-        {% csrf_token %}
-      <div class="text-3xl font-bold flex justify-center text-white">
-        Welcome Back
-      </div>
-
-      <div class="underline mb-2">
+  <form class="flex flex-col  bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl" method="post">
+    {% csrf_token %}
+    <div class="text-3xl font-bold flex justify-center text-white">
+      Welcome Back
+    </div>
+        <div class="flex justify-center text-gray-400 mb-4">
+      <a href="{% url 'signup' %}" class="hover:text-gray-200 focus:outline-none focus:shadow-outline">
+        Don't have an account? Sign up here.
+      </a>
+    </div>
+    <div class="underline mb-2">
       {{ form.non_field_errors }}
       {% for message in messages %}
-        {{message}}
+      {{message}}
       {% endfor %}
-      </div>
-      {% for field in form %}
-      <div class="flex flex-col mb-6">
-        {{ field.errors|striptags }}
-        <label class="text-gray-400 font-semibold">
+    </div>
+    {% for field in form %}
+    <div class="flex flex-col mb-6">
+      {{ field.errors|striptags }}
+      <label class="text-gray-400 font-semibold">
         {{ field.label }}
-        </label>
-        {{ field }}
-      </div>
-      {% endfor%}
-      <button
-        class="flex justify-center mt-4 bg-gray-600 rounded-md text-white p-2 hover:bg-gray-700 focus:outline-none focus:shadow-outline"
-        type="submit">
-        Continue
-      </button>
-    </form>
-  </main>
-{% endblock content %} 
+      </label>
+      {{ field }}
+    </div>
+    {% endfor%}
+    <button
+      class="flex justify-center mt-4 bg-gray-600 rounded-md text-white p-2 hover:bg-gray-700 focus:outline-none focus:shadow-outline"
+      type="submit">
+      Continue
+    </button>
+  </form>
+</main>
+{% endblock content %}

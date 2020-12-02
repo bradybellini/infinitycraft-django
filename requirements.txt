@@ -1,6 +1,7 @@
 django
 django-ratelimit
 django-simple-captcha
+django-summernote
 # https://github.com/anymail/django-anymail
 # https://github.com/fabiocaccamo/django-maintenance-mode
 # https://github.com/django-haystack/django-haystack

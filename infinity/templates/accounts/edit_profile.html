@@ -7,35 +7,26 @@
     <div class="p-6">
       <ul class="flex">
         <li class="-mb-px mr-1">
-          <a
-            class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold"
-            href="{% url 'profile' %}"
-          >
+          <a class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold"
+            href="{% url 'profile' %}">
             Info
           </a>
         </li>
         <li class="mr-1">
-          <a
-            class="text-gray-400 hover:border-logo-red border-b-2 border-logo-red bg-dark-2 inline-block py-2 px-4 font-semibold"
-            href="{% url 'edit_profile' %}"
-          >
+          <a class="text-gray-400 hover:border-logo-red border-b-2 border-logo-red bg-dark-2 inline-block py-2 px-4 font-semibold"
+            href="{% url 'edit_profile' %}">
             Edit Profile
           </a>
         </li>
         <li class="mr-1">
-          <a
-            class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold"
-            href="{% url 'change_password' %}"
-          >
+          <a class="text-gray-400 hover:border-logo-red border-b-2 border-dark-2 bg-dark-2 inline-block py-2 px-4 font-semibold"
+            href="{% url 'change_password' %}">
             Change Password
           </a>
         </li>
       </ul>
       <div class="w-full pt-4">
-        <form
-          class="flex flex-col bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl"
-          method="post"
-        >
+        <form class="flex flex-col bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl" method="post">
           {% csrf_token %}
           <div class="underline mb-2">
             {{ form.non_field_errors }} {% for message in messages %}
@@ -52,8 +43,7 @@
           {% endfor%}
           <button
             class="flex justify-center mt-4 bg-gray-600 rounded-md text-white p-2 hover:bg-gray-700 focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
+            type="submit">
             Continue
           </button>
         </form>

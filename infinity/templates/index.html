@@ -1,146 +1,88 @@
 {% extends 'base.html' %}
 
- {% block content %}
+{% block content %}
 
 <main class="container mx-auto">
   <div class="grid grid-cols-4 gap-4 mx-6 my-6">
-    <a
-      href="#"
-      class="col-span-4 bg-dark-4 text-gray-400 p-4 text-xl flex justify-between items-baseline hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline"
-    >
+    <a href="#"
+      class="col-span-4 bg-dark-4 text-gray-400 p-4 text-xl flex justify-between items-baseline hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline">
       Join our Cyberpunk MMORPG Minecraft Server!
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 stroke-current stroke-2"
-        fill="none"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-arrow-right"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 stroke-current stroke-2" fill="none" stroke-linecap="round"
+        stroke-linejoin="round" class="feather feather-arrow-right">
         <path d="M5 12h14M12 5l7 7-7 7" />
       </svg>
     </a>
     <div
-      class="col-span-4 lg:col-span-2 xl:col-span-2 flex justify-center bg-dark-4 text-gray-400 p-4 text-xl hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline uppercase"
-    >
+      class="col-span-4 lg:col-span-2 xl:col-span-2 flex justify-center bg-dark-4 text-gray-400 p-4 text-xl hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline uppercase">
       Server IP: mc.playinfinitycraft.net
     </div>
     <div
-      class="col-span-4 lg:col-span-2 xl:col-span-2 flex justify-center bg-dark-4 text-gray-400 p-4 text-xl hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline"
-    >
+      class="col-span-4 lg:col-span-2 xl:col-span-2 flex justify-center bg-dark-4 text-gray-400 p-4 text-xl hover:text-gray-100 shadow-xl rounded-md focus:outline-none focus:shadow-outline">
       Vote for our Server and get Special Rewards!
     </div>
-
     <div class="col-span-4 lg:col-span-3 xl:col-span-3">
-      {% for post in posts %}
+      {% for post in post_list %}
       <div class="px-4 py-4 bg-dark-3 shadow-xl rounded-md mb-4">
         <div class="py-2 flex flex-row items-center justify-between">
-          <a
-            href="{{ post.get_absolute_url }}"
-            class="text-gray-400 hover:text-gray-300 text-2xl font-bold underline focus:outline-none focus:shadow-outline"
-          >
+          <a href="{% url 'post_detail' post.slug  %}"
+            class="text-gray-400 hover:text-gray-300 text-2xl font-bold underline focus:outline-none focus:shadow-outline">
             {{post.title}}
           </a>
         </div>
         <div class="flex flex-row items-baseline">
-          <a
-            href="#"
-            class="text-sm font-medium text-gray-500 hover:text-gray-200 underline focus:outline-none focus:shadow-outline"
-          >
+          <div class="text-sm font-medium text-gray-500 focus:outline-none focus:shadow-outline">
             {{post.author}}
-          </a>
+          </div>
           <div class="text-sm font-semibold text-gray-500 mx-4">
-            {{post.timestamp|timesince}}
+            {{post.created_on|timesince}} ago
           </div>
         </div>
-        <div class="py-2">
-          <p class="text-gray-400">{{post.overview}}</p>
+        <div class="py-2 text-gray-400">
+          <p class="">{{post.content|slice:":500"|safe}}...</p>
         </div>
         <div class="py-2 flex flex-row justify-start">
-          <a
-            href="#"
-            class="focus:outline-none focus:shadow-outline text-gray-500 hover:text-gray-300 underline"
-          >
+          <a href="{% url 'post_detail' post.slug  %}"
+            class="focus:outline-none focus:shadow-outline text-gray-500 hover:text-gray-300 underline">
             Read More...
           </a>
         </div>
       </div>
       {% endfor %}
     </div>
-
-    <div class="col-span-4 lg:col-span-1 xl:col-span-1">
-      <div class="bg-dark-3 text-xl flex-row rounded-md">
-        <div
-          class="flex justify-center lg:justify-start xl:justify-start m-1 pl-2 text-gray-300"
-        >
-          Server IP
-        </div>
-        <hr class="stroke-current text-black" />
-        <div
-          class="text-gray-500 pb-2 hover:text-gray-100 uppercase text-xl font-bold cursor-pointer shadow-xl flex justify-center"
-          data-copy-text="mc.playinfinitycraft.net"
-        >
-          mc.playinfinitycraft.net
-        </div>
-        <div class="text-gray-200 hidden">Copied!</div>
-      </div>
-    </div>
-  </div>
+    
+  {% block sidebar %} 
+    {% include 'sidebar.html' %} 
+  {% endblock sidebar %}
+  
+  {% if is_paginated %}
   <ul class="flex justify-center mb-4 items-center">
-  {% if posts.has_previous %}
+    {% if page_obj.has_previous %}
     <li>
-      <a
-        class="flex items-center font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 hover:border-logo-red border-dark-2 focus:outline-none focus:shadow-outline"
-        href="?{{ page_request_var }}={{ posts.previous_page_number }}"
-      >
-        <svg
-          class="h-5 w-5 mx-1"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-chevron-left"
-        >
+      <a class="flex items-center font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 hover:border-logo-red border-dark-2 focus:outline-none focus:shadow-outline"
+        href="?page={{ page_obj.previous_page_number }}">
+        <svg class="h-5 w-5 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </a>
     </li>
     {% endif %}
     <li>
-      <a
-        class="font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 border-logo-red focus:outline-none focus:shadow-outline"
-        href="#"
-        >{{ posts.number }}</a
-      >
+      <a class="font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 border-logo-red focus:outline-none focus:shadow-outline"
+        href="#">{{ page_obj.number}}</a>
     </li>
-    {% if posts.has_next %}
+    {% if page_obj.has_next %}
     <li>
-      <a
-        class="flex items-center font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 hover:border-logo-red border-dark-2 focus:outline-none focus:shadow-outline"
-        href="?{{ page_request_var }}={{ posts.next_page_number }}"
-      >
-        <svg
-          class="h-5 w-5 mx-1"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-chevron-right"
-        >
+      <a class="flex items-center font-bold mx-1 px-3 py-2 text-gray-500 border-b-2 hover:border-logo-red border-dark-2 focus:outline-none focus:shadow-outline"
+        href="?page={{ page_obj.next_page_number }}">
+        <svg class="h-5 w-5 mx-1" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
           <path d="M9 18l6-6-6-6" />
         </svg>
       </a>
     </li>
     {% endif %}
   </ul>
+  {% endif %}
 </main>
-{% endblock content %} 
-
-{% comment %} ?{{ page_request_var }}={{ paginated_queryset.previous_page_number }} {% endcomment %}
-
-{% comment %} {% for obj in object_list %} {{obj.title}} {{obj.author}}
-{{obj.timestamp|timesince}} {{obj.overview}} {% endfor %} {% endcomment %}
+{% endblock content %}

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from django.contrib import messages
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+
 from django.contrib.auth import (
     authenticate,
     get_user_model,
@@ -19,8 +20,7 @@ from .decorators import auth_redirect, allowed_users
 
 
 # @allowed_users(allowed_roles=['admin'])
-def home(request):
-    return render(request, 'index.html')
+
 
 
 @ratelimit(key='ip', rate='1/m')
@@ -122,3 +122,5 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
         context = {"form": form}
         return render(request, 'accounts/change_password.html', context)
+        
+    

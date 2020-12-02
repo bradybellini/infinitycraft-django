@@ -1,18 +1,12 @@
 {% extends 'base.html' %} {% block content %}
 <main class="container mx-auto flex justify-center my-20">
-  <form
-    class="flex flex-col bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl"
-    method="post"
-  >
+  <form class="flex flex-col bg-dark-3 text-gray-400 p-5 rounded-md shadow-xl" method="post">
     {% csrf_token %}
     <div class="text-3xl font-bold flex justify-center text-white">
       Welcome to InfinityCraft
     </div>
     <div class="flex justify-center text-gray-400 mb-4">
-      <a
-        href="#"
-        class="hover:text-gray-200 focus:outline-none focus:shadow-outline"
-      >
+      <a href="{% url 'login' %}" class="hover:text-gray-200 focus:outline-none focus:shadow-outline">
         Already have an account? Sign in here.
       </a>
     </div>
@@ -20,15 +14,13 @@
     {% for field in form %}
     <div class="flex flex-col mb-6">
       <div class="underline">{{ field.errors|striptags }}</div>
-
       <label class="text-gray-400 font-semibold"> {{ field.label }} </label>
       {{ field }}
     </div>
     {% endfor%}
     <button
       class="flex justify-center mt-4 bg-gray-600 rounded-md text-white p-2 hover:bg-gray-700 focus:outline-none focus:shadow-outline"
-      type="submit"
-    >
+      type="submit">
       Continue
     </button>
   </form>

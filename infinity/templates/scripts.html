@@ -1,19 +1,18 @@
-  <script>
-    var copy_elements = document.querySelectorAll("[data-copy-text]");
-    var copy_count;
+<script>
+  var copy_elements = document.querySelectorAll("[data-copy-text]");
+  var copy_count;
 
-    for (copy_count = 0; copy_count < copy_elements.length; copy_count++) {
-      copy_elements[copy_count].addEventListener("click", async (event) => {
-        if (!navigator.clipboard) {
-          return;
-        }
-
-        try {
-          var copy_value = event.srcElement.getAttribute("data-copy-text");
-          await navigator.clipboard.writeText(copy_value);
-        } catch (error) {
-          console.error("copy failed", error);
-        }
-      });
-    }
-  </script>
+  for (copy_count = 0; copy_count < copy_elements.length; copy_count++) {
+    copy_elements[copy_count].addEventListener("click", async (event) => {
+      if (!navigator.clipboard) {
+        return;
+      }
+      try {
+        var copy_value = event.srcElement.getAttribute("data-copy-text");
+        await navigator.clipboard.writeText(copy_value);
+      } catch (error) {
+        console.error("copy failed", error);
+      }
+    });
+  }
+</script>

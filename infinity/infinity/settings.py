@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     
     'ratelimit',
     'captcha',
+    'django_summernote',
     
     'users',
     'aeon',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +148,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SECURE_BROWSER_XSS_FILTER = True
 
-X_FRAME_OPTIONS = "DENY"
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'

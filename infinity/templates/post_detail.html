@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="container mx-auto">
+  <div class="grid grid-cols-4 gap-4 mx-6 my-6">
+    <div class="col-span-4 lg:col-span-3 xl:col-span-3">
+      <div class="px-4 py-4 bg-dark-3 shadow-xl rounded-md mb-4">
+        <div class="py-2 flex flex-row items-center justify-between">
+          <a href="{% url 'post_detail' post.slug  %}"
+            class="text-gray-400 hover:text-gray-300 text-2xl font-bold underline focus:outline-none focus:shadow-outline">
+            {% block title %} {{ object.title }} {% endblock title %}
+          </a>
+        </div>
+        <div class="flex flex-row items-baseline">
+          <div class="text-sm font-medium text-gray-500 focus:outline-none focus:shadow-outline">
+            {{post.author}}
+          </div>
+          <div class="text-sm font-semibold text-gray-500 mx-4">
+            {{post.created_on}}
+          </div>
+        </div>
+        <div class="py-2 text-gray-400">
+          <p class="">{{ object.content | safe }}</p>
+        </div>
+        <div class="py-2 flex flex-row justify-start">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-span-4 lg:col-span-1 xl:col-span-1">
+      <div class="bg-dark-3 text-xl flex-row rounded-md">
+        <div class="flex justify-center lg:justify-start xl:justify-start m-1 pl-2 text-gray-300">
+          Server IP
+        </div>
+        <hr class="stroke-current text-black" />
+        <div
+          class="text-gray-500 pb-2 hover:text-gray-100 uppercase text-xl font-bold cursor-pointer shadow-xl flex justify-center"
+          data-copy-text="mc.playinfinitycraft.net">
+          mc.playinfinitycraft.net
+        </div>
+        <div class="text-gray-200 hidden">Copied!</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}
